@@ -3,7 +3,6 @@ title: "標準設計書 — システム共通仕様"
 tags:
   - SC作成
   - システム設計書（全体）
-status: "作業中"
 owner: "KCCS"
 doc_no: "5.9.2"
 ---

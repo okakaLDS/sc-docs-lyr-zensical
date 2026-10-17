@@ -2,7 +2,6 @@
 title: "検索条件表"
 tags:
   - 機能定義書
-status: "作業中"
 owner: "KCCS"
 doc_no: "8.3.5"
 ---

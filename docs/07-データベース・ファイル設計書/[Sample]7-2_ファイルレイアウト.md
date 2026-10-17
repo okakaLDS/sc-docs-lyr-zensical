@@ -3,7 +3,6 @@ title: "ファイルレイアウト（サンプル）"
 tags:
   - SC作成
   - データベース・ファイル設計書
-status: "作業中"
 owner: "SC様"
 doc_no: "7.2"
 file_id: "FAZS121"

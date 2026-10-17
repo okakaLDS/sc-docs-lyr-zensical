@@ -2,7 +2,6 @@
 title: "半導体顧客向け基本設計書"
 tags:
   - 概要
-status: "作業中"
 owner: "KCCS"
 ---
 

@@ -2,7 +2,6 @@
 title: "バッチ一覧"
 tags:
   - 管理台帳
-status: "作業中"
 owner: "KCCS"
 doc_no: "6.3"
 ---

@@ -3,21 +3,15 @@
    document$ はインスタントナビゲーションでページが切り替わるたびに発火する。
    ============================================================================= */
 
-/* ナビの各ページを、ファイル名の接頭辞（[使い方]／[Template]／[Sample]）で色バッジ付けする。
-   「CRUD表（使い方）」のように表示名末尾にある種別の括弧書きはバッジと重複するので隠す。
-   ページのtitleそのものは変えない（検索・llms.txtはそのまま）。 */
+/* サイトはSampleだけを載せるので、ナビの表示名末尾の「（サンプル）」「（サンプル・架空データ）」は省く。
+   ページのtitleそのものは変えない（検索・llms.txtはそのまま。省いた全文はツールチップに残す）。 */
 var ZX_SUFFIX = /\s*（(使い方|テンプレート|サンプル[^）]*)）\s*$/;
 
 function zxDecorateNav() {
   document.querySelectorAll(".md-nav--primary a.md-nav__link[href]").forEach(function (link) {
-    if (link.dataset.zxKind) return;
-    var href = decodeURIComponent(link.getAttribute("href"));
-    var m = href.match(/\[(使い方|Template|Sample)\]/);
-    if (!m) return;
-    link.dataset.zxKind = m[1];
+    if (link.dataset.zxTrimmed) return;
+    link.dataset.zxTrimmed = "1";
     var label = link.querySelector(".md-ellipsis") || link;
-    label.classList.add("zx-kind");
-    label.dataset.zxKind = m[1];
     var node = label.firstChild;
     while (node && (node.nodeType !== Node.TEXT_NODE || !node.textContent.trim())) {
       node = node.nextSibling;

@@ -3,7 +3,6 @@ title: "開発方針（サンプル）"
 tags:
   - SC作成
   - システム化の要件・基本方針
-status: "作業中"
 owner: "SC様"
 doc_no: "2.2"
 ---

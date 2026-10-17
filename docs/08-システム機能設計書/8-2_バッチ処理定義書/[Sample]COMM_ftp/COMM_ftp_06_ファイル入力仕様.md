@@ -2,7 +2,6 @@
 title: "ファイル入力仕様"
 tags:
   - バッチ処理定義書
-status: "作業中"
 owner: "KCCS"
 doc_no: "8.2.7"
 ---

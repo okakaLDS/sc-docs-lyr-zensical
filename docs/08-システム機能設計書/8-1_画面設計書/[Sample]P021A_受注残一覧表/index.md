@@ -2,7 +2,6 @@
 title: "設計書構成"
 tags:
   - 機能定義書
-status: "作業中"
 owner: "KCCS"
 doc_no: "8.1.1"
 function_id: "P021A"

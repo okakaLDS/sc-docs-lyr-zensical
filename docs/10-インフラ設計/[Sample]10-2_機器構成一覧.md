@@ -3,7 +3,6 @@ title: "機器構成一覧（サンプル）"
 tags:
   - SC作成
   - インフラ設計
-status: "作業中"
 owner: "SC様"
 doc_no: "10.2"
 ---

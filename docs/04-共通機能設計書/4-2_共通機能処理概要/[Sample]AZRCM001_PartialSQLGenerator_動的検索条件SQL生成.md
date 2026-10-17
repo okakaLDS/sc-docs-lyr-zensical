@@ -2,7 +2,6 @@
 title: "AZRCM001 — PartialSQLGenerator（動的検索条件SQL生成）"
 tags:
   - 共通機能
-status: "作業中"
 owner: "KCCS"
 doc_no: "4.2"
 ---

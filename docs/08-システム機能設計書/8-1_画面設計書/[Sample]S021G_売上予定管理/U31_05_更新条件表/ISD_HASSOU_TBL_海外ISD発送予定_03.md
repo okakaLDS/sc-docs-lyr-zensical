@@ -2,7 +2,6 @@
 title: "更新条件表 — ISD_HASSOU_TBL"
 tags:
   - 機能定義書
-status: "作業中"
 owner: "KCCS"
 doc_no: "8.1.6"
 table_id: "ISD_HASSOU_TBL"

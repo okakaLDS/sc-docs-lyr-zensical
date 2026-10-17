@@ -75,7 +75,7 @@
 
 {% block content %}
   {% set meta = page.meta or {} %}
-  {% if meta.doc_no or meta.owner or meta.status %}
+  {% if meta.doc_no or meta.owner %}
     <div class="zx-meta" aria-label="ドキュメント情報">
       {% if meta.doc_no %}
         <span class="zx-chip zx-chip--docno" title="文書番号">
@@ -85,11 +85,6 @@
       {% if meta.owner %}
         <span class="zx-chip zx-chip--owner" data-owner="{{ meta.owner }}" title="作成担当">
           {% include ".icons/lucide/user-round.svg" %}{{ meta.owner }}
-        </span>
-      {% endif %}
-      {% if meta.status %}
-        <span class="zx-chip zx-chip--status" data-status="{{ meta.status }}" title="作業状況">
-          {% include ".icons/lucide/circle-dot.svg" %}{{ meta.status }}
         </span>
       {% endif %}
     </div>

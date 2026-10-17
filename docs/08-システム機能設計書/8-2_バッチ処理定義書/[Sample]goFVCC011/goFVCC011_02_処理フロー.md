@@ -2,7 +2,6 @@
 title: "処理フロー"
 tags:
   - バッチ処理定義書
-status: "作業中"
 owner: "Rikkei"
 doc_no: "8.2.3"
 ---

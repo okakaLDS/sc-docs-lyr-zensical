@@ -2,7 +2,6 @@
 title: "CRUD表（サンプル・架空データ）"
 tags:
   - システム設計（全体）
-status: "作業中"
 owner: "KCCS"
 doc_no: "5.5"
 ---

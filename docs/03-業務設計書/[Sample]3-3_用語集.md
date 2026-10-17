@@ -3,7 +3,6 @@ title: "用語集（サンプル）"
 tags:
   - SC作成
   - 業務設計書
-status: "作業中"
 owner: "SC様"
 doc_no: "3.3"
 ---

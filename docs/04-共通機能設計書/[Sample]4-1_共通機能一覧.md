@@ -2,7 +2,6 @@
 title: "共通機能一覧（サンプル）"
 tags:
   - 共通機能
-status: "作業中"
 owner: "KCCS"
 doc_no: "4.1"
 ---

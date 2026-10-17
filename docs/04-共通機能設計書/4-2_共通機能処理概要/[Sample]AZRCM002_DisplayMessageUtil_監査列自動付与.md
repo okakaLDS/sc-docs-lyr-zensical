@@ -2,7 +2,6 @@
 title: "AZRCM002 — DisplayMessageUtil／LogMessage（登録・更新SQL監査列自動付与）"
 tags:
   - 共通機能
-status: "作業中"
 owner: "KCCS"
 doc_no: "4.2"
 ---

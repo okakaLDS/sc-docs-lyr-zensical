@@ -17,6 +17,9 @@
       - コードスパン・コードブロック内のリンク（記述例）は書き換えない
   full … 正本のまま（全ページ・同じ階層）
 
+front matter:
+  status はサイトに出さないので取り除く（正本では DOCUMENT_INDEX.md の集計に使う）。
+
 タブ分け（既定で有効、--no-tabs で無効）:
   末尾の「## 文書情報」「## 改定履歴」を本文と別タブにする（pymdownx.blocks.tab）。
   正本はVSCodeで崩れないようタブ記法を使わないので、変換はこの同期時に行う。
@@ -336,6 +339,26 @@ def write_nav(nav: list, layout: str) -> int:
 # 反映
 # ---------------------------------------------------------------------------
 # ---------------------------------------------------------------------------
+# front matter
+# ---------------------------------------------------------------------------
+DROP_FRONT_MATTER_KEYS = ("status",)  # サイトには出さない項目（正本の台帳管理用）
+
+
+def drop_front_matter_keys(text: str) -> str:
+    """front matter から DROP_FRONT_MATTER_KEYS の行を取り除く（値が1行の項目のみ）。"""
+    if not text.startswith("---\n"):
+        return text
+    end = text.find("\n---", 4)
+    if end < 0:
+        return text
+    head = [
+        line for line in text[4:end].split("\n")
+        if not any(line.startswith(f"{k}:") for k in DROP_FRONT_MATTER_KEYS)
+    ]
+    return "---\n" + "\n".join(head) + text[end:]
+
+
+# ---------------------------------------------------------------------------
 # 文書情報・改定履歴のタブ分け
 # ---------------------------------------------------------------------------
 TAIL_SECTIONS = ("文書情報", "改定履歴", "改訂履歴")
@@ -417,8 +440,8 @@ def sync(src: Path, layout: str, tabs: bool) -> list:
     outputs: dict[str, bytes] = {}
     for old, new in mapping.items():
         data = (src / old).read_bytes()
-        if old.endswith(".md") and (layout != "full" or tabs):
-            text = data.decode("utf-8")
+        if old.endswith(".md"):
+            text = drop_front_matter_keys(data.decode("utf-8"))
             if layout != "full":
                 text = rewrite_links(text, old, new, mapping, fallback, removed_dirs)
             if tabs:

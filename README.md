@@ -33,6 +33,7 @@
   - 移動したページへのリンクは張り替える。載せないページへのリンクは同じドキュメントの `[Sample]` へ向け、
     向け先が自分自身なら地の文にする（コード内の記述例は書き換えない）
 - `--layout full` で正本どおり（全ページ・同じ階層）に戻せる
+- front matter の `status` は取り除く（サイトには出さない。正本では DOCUMENT_INDEX.md の集計に使う）
 - 末尾の「## 文書情報」「## 改定履歴」を本文と別タブ（「本文」／「文書情報・改定履歴」）にする（`--no-tabs` で無効）。
   正本はVSCodeで崩れないようタブ記法を使わないため、同期時に `pymdownx.blocks.tab`（字下げ不要の記法）へ変換する。
   8章の機能表紙の「N. 改訂履歴（設計内容）」は設計内容の一部なので本文側に残す。
@@ -61,11 +62,10 @@ http://127.0.0.1:8001/sc-docs-lyr-zensical/ で確認（MkDocs版の8000番と�
 | 編集・原文表示 | `content.action.edit` / `view` | 正本リポジトリの該当ファイルを開く |
 | 検索 | 標準 | 日本語の全文検索。タグで絞り込める |
 | タグ | `[project.plugins.tags]` | front matter の `tags` を横断一覧（`/tags/`） |
-| ページステータス | `[project.extra.status]` | front matter の `status`（作業中／レビュー中／確定）をサイドバーにアイコン表示 |
 | Mermaid | superfences | 追加JSなしで描画。配色はテーマに自動で追従 |
 | インスタントナビ | `navigation.instant*` | ページ遷移をSPA化、ホバーで先読み |
 | 章タブ・パンくず | `navigation.tabs.sticky` / `path` | 章（成果物一覧の項番）を常に上部に表示 |
-| テーマ上書き | `overrides/main.html` | ホームのヒーロー・章カード（ナビから自動生成）、各ページ上部に文書番号・担当・状態 |
+| テーマ上書き | `overrides/main.html` | ホームのヒーロー・章カード（ナビから自動生成）、各ページ上部に文書番号・担当 |
 
 ## デザイン（Zensical版独自）
 
@@ -74,8 +74,9 @@ http://127.0.0.1:8001/sc-docs-lyr-zensical/ で確認（MkDocs版の8000番と�
 
 - 配色: インク（紺）＋コバルト（リンク・操作）＋銅（アクセント）。ダークモード対応
 - 書体: IBM Plex Sans JP ／ IBM Plex Mono（文書番号・ID）
+- ロゴ・ファビコン: `docs/assets/zensical/logo.svg`。設計書（右上が折れたページ）×ICチップ（左右のピン）に、銅色の配線とノードで「仕様の結線」を表す
 - レイアウト: ブラウザの横幅いっぱいに表示（`.md-grid { max-width: none }`）
-- ナビ: `[使い方]`／`[Template]`／`[Sample]` を種別バッジで表示（`site.js`）。表は見出しクリックで並べ替え（tablesort）
+- ナビ: 表示名末尾の「（サンプル）」等を省いて表示（`site.js`）。表は見出しクリックで並べ替え（tablesort）
 - 担当チップの色: KCCS＝コバルト、SC様＝銅、Rikkei＝ティール
 
 ## 正本と挙動が違う点・既知の注意

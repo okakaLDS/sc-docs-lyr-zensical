@@ -303,7 +303,7 @@
 .zx-card:hover .zx-card__go { transform: translateX(3px); color: var(--zx-cobalt); opacity: 1; }
 
 /* -----------------------------------------------------------------------------
-   各ページ: メタ情報バー（front matter の doc_no / owner / status）
+   各ページ: メタ情報バー（front matter の doc_no / owner）
    ----------------------------------------------------------------------------- */
 .zx-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.6rem; }
 .zx-chip {
@@ -321,45 +321,6 @@
 .zx-chip--owner[data-owner="KCCS"] { --zx-chip: var(--zx-cobalt); }
 .zx-chip--owner[data-owner="SC様"] { --zx-chip: var(--zx-copper); }
 .zx-chip--owner[data-owner="Rikkei"] { --zx-chip: var(--zx-teal); }
-.zx-chip--status[data-status="作業中"] { --zx-chip: var(--zx-ink-2); }
-.zx-chip--status[data-status="レビュー中"] { --zx-chip: var(--zx-violet); }
-.zx-chip--status[data-status="確定"] { --zx-chip: var(--zx-teal); }
-
-/* -----------------------------------------------------------------------------
-   サイドバーのページステータス（zensical.toml の [project.extra.status]）
-   作業中は全ページ共通なので目立たせない。レビュー中・確定になったら色で浮く
-   ----------------------------------------------------------------------------- */
-.md-status--作業中::after {
-  mask-image: url("icons/pencil-line.svg"); -webkit-mask-image: url("icons/pencil-line.svg");
-  opacity: 0.35;
-}
-.md-status--レビュー中::after {
-  mask-image: url("icons/eye.svg"); -webkit-mask-image: url("icons/eye.svg");
-  background-color: var(--zx-violet);
-}
-.md-status--確定::after {
-  mask-image: url("icons/circle-check-big.svg"); -webkit-mask-image: url("icons/circle-check-big.svg");
-  background-color: var(--zx-teal);
-}
-
-/* -----------------------------------------------------------------------------
-   ナビ: [使い方]／[Template]／[Sample] の種別バッジ（site.js が属性を付与）
-   ----------------------------------------------------------------------------- */
-.zx-kind::before {
-  content: attr(data-zx-kind);
-  display: inline-block;
-  min-width: 3.6em;
-  margin-right: 0.45em; padding: 0 0.3em;
-  font-family: var(--md-code-font-family);
-  font-size: 0.52rem; font-weight: 700; line-height: 1.7; text-align: center;
-  vertical-align: 0.1em;
-  color: var(--zx-kind);
-  border: 1px solid color-mix(in srgb, var(--zx-kind) 45%, transparent);
-  border-radius: 0.2rem;
-}
-.md-nav__link[data-zx-kind="使い方"] { --zx-kind: var(--zx-cobalt); }
-.md-nav__link[data-zx-kind="Template"] { --zx-kind: var(--zx-ink-2); }
-.md-nav__link[data-zx-kind="Sample"] { --zx-kind: var(--zx-copper); }
 
 /* 印刷（表紙の承認用PDFなど）: 告知・ヒーロー・メタ情報は出さない */
 @media print {

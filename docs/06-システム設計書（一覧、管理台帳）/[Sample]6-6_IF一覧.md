@@ -3,7 +3,6 @@ title: "IF一覧（サンプル）"
 tags:
   - SC作成
   - システム設計書（一覧、管理台帳）
-status: "作業中"
 owner: "SC様"
 doc_no: "6.6"
 ---

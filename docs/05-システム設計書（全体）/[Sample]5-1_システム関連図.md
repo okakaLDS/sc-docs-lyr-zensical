@@ -3,7 +3,6 @@ title: "システム関連図（サンプル）"
 tags:
   - SC作成
   - システム設計書（全体）
-status: "作業中"
 owner: "SC様"
 doc_no: "5.1"
 ---

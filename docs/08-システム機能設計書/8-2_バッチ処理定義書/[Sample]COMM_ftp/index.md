@@ -2,7 +2,6 @@
 title: "設計書構成"
 tags:
   - バッチ処理定義書
-status: "作業中"
 owner: "KCCS"
 doc_no: "8.2.1"
 bat_name: "COMM_ftp"

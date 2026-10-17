@@ -2,7 +2,6 @@
 title: "表紙"
 tags:
   - 表紙
-status: "作業中"
 doc_no: "1"
 owner: "KCCS"
 ---

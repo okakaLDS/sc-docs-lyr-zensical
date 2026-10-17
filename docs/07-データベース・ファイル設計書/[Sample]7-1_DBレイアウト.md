@@ -3,7 +3,6 @@ title: "DBレイアウト（サンプル）"
 tags:
   - SC作成
   - データベース・ファイル設計書
-status: "作業中"
 owner: "SC様"
 doc_no: "7.1"
 table_id: "TAZSD002"

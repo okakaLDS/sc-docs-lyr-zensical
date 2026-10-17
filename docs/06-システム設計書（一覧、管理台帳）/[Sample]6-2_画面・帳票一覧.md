@@ -2,7 +2,6 @@
 title: "画面・帳票一覧"
 tags:
   - 管理台帳
-status: "作業中"
 owner: "SC様"
 doc_no: "6.2"
 ---

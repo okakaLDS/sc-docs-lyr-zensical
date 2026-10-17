@@ -2,7 +2,6 @@
 title: "インターフェース仕様"
 tags:
   - 機能定義書
-status: "作業中"
 owner: "KCCS"
 doc_no: "8.3.2"
 ---

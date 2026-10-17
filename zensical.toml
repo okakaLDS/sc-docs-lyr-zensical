@@ -174,7 +174,8 @@ nav = [
 variant = "modern"
 custom_dir = "overrides"
 language = "ja"
-favicon = "images/favicon.png"
+logo = "assets/zensical/logo.svg"      # 設計書×ICチップ（docs/assets/zensical/logo.svg）
+favicon = "assets/zensical/logo.svg"
 features = [
   "announce.dismiss",
   "content.action.copy",
@@ -206,7 +207,6 @@ text = "IBM Plex Sans JP"
 code = "IBM Plex Mono"
 
 [project.theme.icon]
-logo = "lucide/cpu"
 repo = "lucide/git-branch"
 edit = "lucide/pencil-line"
 view = "lucide/file-code"
@@ -239,15 +239,6 @@ toggle.icon = "lucide/moon"
 toggle.name = "システム設定に合わせる"
 
 # -----------------------------------------------------------------------------
-# ページステータス（front matter の status: をサイドバーにアイコン表示）
-# アイコンと色は docs/assets/zensical/site.css の .md-status--<値>
-# -----------------------------------------------------------------------------
-[project.extra.status]
-"作業中" = "作業中"
-"レビュー中" = "レビュー中"
-"確定" = "確定"
-
-# -----------------------------------------------------------------------------
 # プラグイン
 # -----------------------------------------------------------------------------
 [project.plugins.search]
@@ -260,7 +251,7 @@ full_output = "llms-full.txt"
 markdown_description = """
 SC様向け基本設計書。商流は SC（お客様）→ KCCS → ベンダー。
 各ドキュメントは1フォルダに [使い方]（書き方）／[Template]（記入用の雛形）／[Sample]（記入例）の3ページを置く。
-front matter の owner が担当（KCCS / SC様）、status が作業状況。保守工程の影響調査に使う。
+front matter の owner が担当（KCCS / SC様）、doc_no が成果物一覧の項番。保守工程の影響調査に使う。
 """
 
 [project.plugins.llmstxt.sections]
