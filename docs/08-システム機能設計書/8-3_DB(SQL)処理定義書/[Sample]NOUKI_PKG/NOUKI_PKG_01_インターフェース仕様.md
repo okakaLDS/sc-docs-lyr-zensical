@@ -9,6 +9,9 @@ doc_no: "8.3.2"
 
 # インターフェース仕様
 
+/// tab | 本文
+
+
 ## 1. 基本情報
 
 | 項目           | 内容                              |
@@ -54,7 +57,9 @@ doc_no: "8.3.2"
 | `UPDATE_NOUKI_TO_NOUKI_KAIGAI`  | `seidenNo IN VARCHAR2, saSuryo IN NUMBER, denpyoKbn IN VARCHAR2, updatedDt IN DATE, forceFlag IN NUMBER`（全てIN、OUTなし。`PACKAGE.sql`宣言部で確認済み） |
 | `UPDATE_NOUKI_TO_ZENCHU`        | `forceFlag IN NUMBER`                                                                            |
 
----
+///
+
+/// tab | 文書情報・改定履歴
 
 ## 文書情報
 
@@ -67,3 +72,5 @@ doc_no: "8.3.2"
 | Version | 計画書No. | 改訂日     | 改訂内容 | 担当者 | 課題No./備考 |
 | ------- | --------- | ---------- | -------- | ------ | ------------ |
 | 1.0.0 | K2603-A002 | 2026-09-29 | 新規作成 | KCCS(岡) | - |
+
+///

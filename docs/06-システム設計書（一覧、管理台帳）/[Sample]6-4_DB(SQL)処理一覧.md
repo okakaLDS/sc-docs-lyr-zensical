@@ -9,6 +9,9 @@ doc_no: "6.4"
 
 # DB(SQL)処理一覧
 
+/// tab | 本文
+
+
 ## 1. DB(SQL)処理一覧
 
 | No. | スキーマ | オブジェクト名 | 種別 | 処理概要 | 備考 |
@@ -195,7 +198,9 @@ doc_no: "6.4"
 | 76 | SCSALES | SP_JCHZN_TBL_KOKUNAI | バッチ | SP_JCHZN_TBL_KOKUNAI.bat |
 | 76 | SCSALES | SP_JCHZN_TBL_KOKUNAI | バッチ | sp_jchzn_tbl_kokunai.sql |
 
----
+///
+
+/// tab | 文書情報・改定履歴
 
 ## 文書情報
 
@@ -208,3 +213,5 @@ doc_no: "6.4"
 | Version | 計画書No. | 改訂日     | 改訂内容 | 担当者 | 課題No./備考 |
 | ------- | --------- | ---------- | -------- | ------ | ------------ |
 | 1.0.0 | K2603-A002 | 2026-09-29 | 新規作成 | KCCS(岡) | - |
+
+///

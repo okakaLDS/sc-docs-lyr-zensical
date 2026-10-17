@@ -8,6 +8,9 @@ doc_no: "6.3"
 ---
 # バッチ一覧
 
+/// tab | 本文
+
+
 ## 1. バッチ一覧
 
 | No. | バッチ分類 | バッチファイル名 | 処理概要 | 参照エンジン | 備考 |
@@ -70,7 +73,9 @@ doc_no: "6.3"
 | 56 | Other Batch | KCAF01 | KCAF01業務処理実行。 | | 理由は同上（SeisanUpdate参照） |
 | 57 | Other Batch | SeisanUpdate_new.py | 精算更新新フロー（Python本体）。`SeisanUpdate_new.bat`（No.52）から起動される処理本体（ソース確認済：`cd /d D:\scsales\LYR07` → `venv\Scripts\activate.bat` → `SeisanUpdate_new.py`）。 | | バッチ処理定義書は未作成（サンプルは実処理の記入例として[goFVCC011](<../08-システム機能設計書/8-2_バッチ処理定義書/[Sample]goFVCC011/index.md>)を参照） |
 
----
+///
+
+/// tab | 文書情報・改定履歴
 
 ## 文書情報
 
@@ -83,3 +88,5 @@ doc_no: "6.3"
 | Version | 計画書No. | 改訂日     | 改訂内容 | 担当者 | 課題No./備考 |
 | ------- | --------- | ---------- | -------- | ------ | ------------ |
 | 1.0.0 | K2603-A002 | 2026-09-29 | 新規作成 | KCCS(岡) | - |
+
+///

@@ -17,12 +17,17 @@
       - コードスパン・コードブロック内のリンク（記述例）は書き換えない
   full … 正本のまま（全ページ・同じ階層）
 
+タブ分け（既定で有効、--no-tabs で無効）:
+  末尾の「## 文書情報」「## 改定履歴」を本文と別タブにする（pymdownx.blocks.tab）。
+  正本はVSCodeで崩れないようタブ記法を使わないので、変換はこの同期時に行う。
+
 設計書の中身は正本でのみ編集する（このリポジトリの docs/ を直接直さない）。
 
 使い方:
   python tools/sync_docs.py                       # 既定: ../sc-docs-lyr/docs, sample-flat
   python tools/sync_docs.py --src C:/DOC/sc-docs-lyr/docs
   python tools/sync_docs.py --layout full
+  python tools/sync_docs.py --no-tabs
 """
 
 from __future__ import annotations
@@ -330,7 +335,63 @@ def write_nav(nav: list, layout: str) -> int:
 # ---------------------------------------------------------------------------
 # 反映
 # ---------------------------------------------------------------------------
-def sync(src: Path, layout: str) -> list:
+# ---------------------------------------------------------------------------
+# 文書情報・改定履歴のタブ分け
+# ---------------------------------------------------------------------------
+TAIL_SECTIONS = ("文書情報", "改定履歴", "改訂履歴")
+
+
+def split_tabs(text: str) -> str:
+    """末尾の「## 文書情報」「## 改定履歴」を本文と別タブにする（pymdownx.blocks.tab）。
+
+    対象は、ファイル末尾に連続して並ぶこれらの見出しの節だけ。
+    「5. 改訂履歴（設計内容）」のような番号付きの本文節は対象外（設計内容の一部）。
+    h1（ページタイトル）はタブの外に残す。直前の区切り線 --- は取り除く。
+    """
+    lines = text.split("\n")
+    h1 = None
+    h2: list[tuple[int, str]] = []
+    fence = None
+    start = 0
+    if lines and lines[0] == "---":  # front matter
+        start = lines.index("---", 1) + 1
+    for i in range(start, len(lines)):
+        stripped = lines[i].lstrip()
+        if fence:
+            if stripped.startswith(fence):
+                fence = None
+            continue
+        if fm := re.match(r"^(`{3,}|~{3,})", stripped):
+            fence = fm.group(1)
+            continue
+        if lines[i].startswith("# ") and h1 is None:
+            h1 = i
+        elif lines[i].startswith("## "):
+            h2.append((i, lines[i][3:].strip()))
+
+    k = len(h2)
+    while k > 0 and h2[k - 1][1] in TAIL_SECTIONS:
+        k -= 1
+    if k == len(h2):
+        return text
+    cut = h2[k][0]
+    label = "・".join(name for _, name in h2[k:])
+
+    body_start = h1 + 1 if h1 is not None and h1 < cut else start
+    body = lines[body_start:cut]
+    while body and body[-1].strip() in ("", "---"):
+        body.pop()
+    meta = lines[cut:]
+    while meta and not meta[-1].strip():
+        meta.pop()
+    return "\n".join(
+        lines[:body_start]
+        + ["", "/// tab | 本文", ""] + body + ["", "///", ""]
+        + [f"/// tab | {label}", ""] + meta + ["", "///", ""]
+    )
+
+
+def sync(src: Path, layout: str, tabs: bool) -> list:
     files = sorted(
         rel(src, p) for p in src.rglob("*")
         if p.is_file() and p.name not in SKIP_NAMES and p.relative_to(src).parts[0] not in PROTECTED
@@ -356,9 +417,12 @@ def sync(src: Path, layout: str) -> list:
     outputs: dict[str, bytes] = {}
     for old, new in mapping.items():
         data = (src / old).read_bytes()
-        if old.endswith(".md") and layout != "full":
+        if old.endswith(".md") and (layout != "full" or tabs):
             text = data.decode("utf-8")
-            text = rewrite_links(text, old, new, mapping, fallback, removed_dirs)
+            if layout != "full":
+                text = rewrite_links(text, old, new, mapping, fallback, removed_dirs)
+            if tabs:
+                text = split_tabs(text)
             data = text.encode("utf-8")
         if new in outputs:
             sys.exit(f"出力先が衝突: {new}")
@@ -394,6 +458,7 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--src", type=Path, default=ROOT.parent / "sc-docs-lyr" / "docs")
     ap.add_argument("--layout", choices=["sample-flat", "full"], default="sample-flat")
+    ap.add_argument("--no-tabs", action="store_true", help="文書情報・改定履歴のタブ分けをしない")
     args = ap.parse_args()
     sys.stdout.reconfigure(encoding="utf-8")
     src = args.src.resolve()
@@ -401,7 +466,7 @@ def main() -> None:
         sys.exit(f"正本の docs/ が見つからない（.pages が無い）: {src}")
 
     print(f"正本: {src}（--layout {args.layout}）")
-    nav = sync(src, args.layout)
+    nav = sync(src, args.layout, tabs=not args.no_tabs)
     n = write_nav(nav, args.layout)
     print(f"  nav 生成: {n} ページ")
 

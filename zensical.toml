@@ -291,6 +291,7 @@ def_list = {}
 footnotes = {}
 md_in_html = {}
 tables = {}
+pymdownx.blocks.tab.alternate_style = true  # 本文／文書情報・改定履歴のタブ（sync_docs.py が付与）
 pymdownx.details = {}
 pymdownx.highlight.anchor_linenums = true
 pymdownx.highlight.line_spans = "__span"
