@@ -1,7 +1,10 @@
 # 半導体顧客向け基本設計書サイト（Zensical版）
 
 [Zensical](https://zensical.org/) で構築した基本設計書サイト。
-**設計書の中身は正本（MkDocs版 `C:\DOC\sc-docs-lyr`）と完全に同じ**で、このリポジトリはサイトの見せ方だけを持つ。
+設計書の中身は正本（MkDocs版 `C:\DOC\sc-docs-lyr`）から同期し、このリポジトリはサイトの見せ方だけを持つ。
+
+**掲載範囲は各ドキュメントの `[Sample]`（記入例）だけ**で、階層もフラットにしている（2026-10-18〜。VitePress版の試行と同じ構成）。
+`[使い方]`・`[Template]` は正本を参照する。
 
 - 正本: https://github.com/okakaLDS/sc-docs-lyr （設計書の編集はすべて正本で行う）
 - 関連: VitePress版 `C:\DOC\sc-docs-lyr-vitepress`
@@ -23,7 +26,13 @@
 .venv/Scripts/python.exe tools/sync_docs.py
 ```
 
-- 正本の `docs/` をミラーする（正本で消したファイルはこちらでも消える。`docs/assets/` は対象外）
+- 正本の `docs/` を変換して反映する（正本で消したファイルはこちらでも消える。`docs/assets/` は対象外）
+- 既定の構成 `--layout sample-flat`:
+  - `[使い方]`／`[Template]` のページは載せない
+  - 章フォルダ以外で中身が1ファイルだけになるフォルダは、そのファイルを1階層上へ移す
+  - 移動したページへのリンクは張り替える。載せないページへのリンクは同じドキュメントの `[Sample]` へ向け、
+    向け先が自分自身なら地の文にする（コード内の記述例は書き換えない）
+- `--layout full` で正本どおり（全ページ・同じ階層）に戻せる
 - 正本の `.pages`（awesome-pages）を読み、`zensical.toml` の `nav` を生成する
   （Zensicalは awesome-pages 未対応のため）。正本と同じ表示順・章タイトルになる
 - 正本の場所が違う場合は `--src <正本のdocs>` を付ける
@@ -70,14 +79,15 @@ http://127.0.0.1:8001/sc-docs-lyr-zensical/ で確認（MkDocs版の8000番と�
 - `attr_list` 拡張は無効。見出し末尾の `{機能ID}` 等のプレースホルダーが属性として消えるため
 - 正本の `stylesheets/extra.css`・`javascripts/extra.js` は同期されるが読み込まない。
   表紙の押印枠（`.seal-table`／`.seal-box`）だけ `site.css` に移植している
-- ビルド時にアンカー切れの警告が2件出る（正本側の問題。MkDocs版では検出されていない）:
+- 正本側に既知のアンカー切れが2件ある（MkDocs版では検出されていない）:
   `04-共通機能設計書/4-1_共通機能一覧/[使い方]4-1_共通機能一覧.md` 220・222行目の
   `#21-共通機能定義一覧`／`#22-使用マトリクス`。見出しは「— サンプル様式」付きのため実際のアンカーと一致しない。
-  このため CI では `--strict` を付けていない
+  sample-flat では対象外のページなので警告は出ないが、`--layout full` に戻すと出るため CI では `--strict` を付けていない
+- トップページ（`index.md`）の「ページの構成」節は正本の文章のまま（使い方／Template／Sample の3種の説明が残る）
 - `git-revision-date`（最終更新日）は Zensical 側が未対応（ロードマップ上は予定）
 
 ## デプロイ
 
 `.github/workflows/deploy.yml` が main への push で GitHub Pages にデプロイする
 （`site_url` は `https://okakalds.github.io/sc-docs-lyr-zensical/` を想定）。
-GitHubリポジトリは未作成。作成後、Settings → Pages → Source を「GitHub Actions」にする。
+公開URL: https://okakalds.github.io/sc-docs-lyr-zensical/ （リポジトリはPublic）

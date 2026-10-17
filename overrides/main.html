@@ -31,8 +31,8 @@
           <p class="zx-hero__eyebrow"><span>BASIC DESIGN</span>SC様向け 基本設計書 ／ 成果物一覧 項番1〜11</p>
           <h1 class="zx-hero__title">{{ config.site_name }}</h1>
           <p class="zx-hero__lead">
-            各ドキュメントは <strong>使い方</strong>・<strong>Template</strong>・<strong>Sample</strong> の3ページ構成。
-            書き方を読み、雛形に記入し、記入例で確かめる。
+            成果物一覧の各ドキュメントについて、<strong>記入例（Sample）</strong>を掲載。
+            書き方（使い方）と空の雛形（Template）は正本リポジトリにある。
           </p>
           <div class="zx-hero__actions">
             <a class="md-button md-button--primary" href="{{ '基本設計書のドキュメント一覧/' | url }}">
@@ -61,8 +61,9 @@
           <span class="zx-card__no">{{ "%02d" | format(ns.n) }}</span>
           <span class="zx-card__title">{{ item.title }}</span>
           <span class="zx-card__docs">
-            {% for child in item.children if child.children %}
-              <span>{{ child.title }}</span>
+            {#- 章内のページ・セクション。表示名末尾の「（サンプル）」等は章カードでは省く -#}
+            {% for child in item.children %}
+              <span>{{ child.title | replace("（サンプル・架空データ）", "") | replace("（サンプル）", "") }}</span>
             {% endfor %}
           </span>
           <span class="zx-card__go">{% include ".icons/lucide/arrow-right.svg" %}</span>
