@@ -1,0 +1,104 @@
+/* ========================================================
+   Zensical公式サイト準拠カラー: インディゴベース + コーラル/アンバーのグラデーションアクセント
+   ======================================================== */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:        #4051B5;
+  --md-primary-fg-color--light: #5C6BC0;
+  --md-primary-fg-color--dark:  #2C3A8C;
+  --md-accent-fg-color:         #FF7735;
+  --md-accent-fg-color--transparent: #FF77351a;
+  --zen-gradient: linear-gradient(35deg, rgba(255, 138, 140, 0.93), rgba(255, 193, 32, 0.8));
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #5C6BC0;
+  --md-primary-fg-color--light: #7986CB;
+  --md-primary-fg-color--dark:  #4051B5;
+  --md-default-bg-color:        #0B0C0F;
+  --md-accent-fg-color:         #FF8A8C;
+  --md-accent-fg-color--transparent: #FF8A8C1a;
+  --zen-gradient: linear-gradient(35deg, rgba(255, 138, 140, 0.93), rgba(255, 193, 32, 0.8));
+}
+
+/* ========================================================
+   コンテンツ幅: デフォルト(45rem)より広め
+   ======================================================== */
+:root {
+  --md-content-max-width: 70rem;
+  --md-sidebar-width: 14rem;
+}
+
+/* ========================================================
+   章タブ: 画面幅に収まらない場合は横スクロールで全章クリック可能にする
+   （デフォルトははみ出た分が切れてクリック不能になる）
+   ======================================================== */
+.md-tabs {
+  overflow-x: auto;
+  /* スクロールバーは細く控えめに */
+  scrollbar-width: thin;
+}
+
+/* ========================================================
+   見出し: 字詰めを締めた太字（Zensicalヒーロー見出し風）
+   ======================================================== */
+.md-typeset h1,
+.md-typeset h2 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+.md-typeset h1 {
+  position: relative;
+}
+.md-typeset h1::after {
+  content: "";
+  display: block;
+  height: 4px;
+  width: 3rem;
+  margin-top: 0.5rem;
+  border-radius: 4px;
+  background: var(--zen-gradient);
+}
+
+/* ========================================================
+   admonition / details: 控えめな角丸とホバーの浮き上がり
+   ======================================================== */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 4px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.md-typeset .admonition:hover,
+.md-typeset details:hover {
+  box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.12);
+  transform: translateY(-1px);
+}
+
+/* ========================================================
+   コードブロックのコピー演出
+   ======================================================== */
+.md-clipboard {
+  transition: transform 0.15s ease;
+}
+.md-clipboard:hover {
+  transform: scale(1.15);
+}
+.md-clipboard.docs-copied {
+  color: var(--md-accent-fg-color);
+  transform: scale(1.3);
+}
+
+/* ========================================================
+   タブ(本文/改定履歴): 選択中タブをグラデーションで強調
+   ======================================================== */
+.md-typeset .tabbed-set > input:checked + label {
+  color: var(--md-primary-fg-color);
+}
+.md-typeset .tabbed-labels::before {
+  background: var(--zen-gradient) !important;
+}
+
+
+/* 表紙（01_表紙.md）の押印枠。承認はPDF側で捺印し、Markdownには印影を貼らない運用 */
+.seal-table { border-collapse: collapse; }
+.seal-table th, .seal-table td { border: 1px solid #888; padding: 4px 10px; text-align: center; }
+.seal-box { width: 20mm; height: 20mm; margin: 4px auto; border: 1px dashed #aaa; border-radius: 4px; }

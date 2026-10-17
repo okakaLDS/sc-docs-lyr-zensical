@@ -1,0 +1,97 @@
+{#-
+  Zensical版専用のテーマ上書き。設計書（docs/）には一切手を入れず、
+  ホームのヒーロー・章カード、各ページのメタ情報バー、告知バナーをここで足す。
+-#}
+{% extends "base.html" %}
+
+{#- 章（セクション）の最初のページのURLを返す -#}
+{% macro first_url(item) -%}
+  {%- if item.children -%}
+    {{- first_url(item.children | first) -}}
+  {%- else -%}
+    {{- item.url | url -}}
+  {%- endif -%}
+{%- endmacro %}
+
+{% block announce %}
+  <span class="zx-announce">
+    {% include ".icons/lucide/sparkles.svg" %}
+    生成AIでの影響調査用に
+    <a href="{{ 'llms.txt' | url }}">llms.txt</a>（目次）と
+    <a href="{{ 'llms-full.txt' | url }}">llms-full.txt</a>（全文）を公開しています。
+    各ページ右上のボタンからMarkdown原文も取得できます。
+  </span>
+{% endblock %}
+
+{% block hero %}
+  {% if page and page.url == "" %}
+    <section class="zx-hero">
+      <div class="zx-hero__inner md-grid">
+        <div class="zx-hero__text">
+          <p class="zx-hero__eyebrow"><span>BASIC DESIGN</span>SC様向け 基本設計書 ／ 成果物一覧 項番1〜11</p>
+          <h1 class="zx-hero__title">{{ config.site_name }}</h1>
+          <p class="zx-hero__lead">
+            各ドキュメントは <strong>使い方</strong>・<strong>Template</strong>・<strong>Sample</strong> の3ページ構成。
+            書き方を読み、雛形に記入し、記入例で確かめる。
+          </p>
+          <div class="zx-hero__actions">
+            <a class="md-button md-button--primary" href="{{ '基本設計書のドキュメント一覧/' | url }}">
+              {% include ".icons/lucide/list-checks.svg" %} ドキュメント一覧
+            </a>
+            <a class="md-button" href="{{ 'tags/' | url }}">
+              {% include ".icons/lucide/tags.svg" %} タグから探す
+            </a>
+            <a class="md-button" href="{{ 'llms.txt' | url }}">
+              {% include ".icons/lucide/bot.svg" %} llms.txt
+            </a>
+          </div>
+        </div>
+        {#- ウェハ（ダイの格子）。装飾なので読み上げ対象外 -#}
+        <div class="zx-wafer" aria-hidden="true">
+          <div class="zx-wafer__disc"></div>
+          <div class="zx-wafer__notch"></div>
+        </div>
+      </div>
+    </section>
+    {%- set ns = namespace(n = 0) %}
+    <section class="zx-chapters md-grid">
+      {% for item in nav.items if item.children %}
+        {%- set ns.n = ns.n + 1 %}
+        <a class="zx-card" href="{{ first_url(item) }}">
+          <span class="zx-card__no">{{ "%02d" | format(ns.n) }}</span>
+          <span class="zx-card__title">{{ item.title }}</span>
+          <span class="zx-card__docs">
+            {% for child in item.children if child.children %}
+              <span>{{ child.title }}</span>
+            {% endfor %}
+          </span>
+          <span class="zx-card__go">{% include ".icons/lucide/arrow-right.svg" %}</span>
+        </a>
+      {% endfor %}
+    </section>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% set meta = page.meta or {} %}
+  {% if meta.doc_no or meta.owner or meta.status %}
+    <div class="zx-meta" aria-label="ドキュメント情報">
+      {% if meta.doc_no %}
+        <span class="zx-chip zx-chip--docno" title="文書番号">
+          {% include ".icons/lucide/hash.svg" %}{{ meta.doc_no }}
+        </span>
+      {% endif %}
+      {% if meta.owner %}
+        <span class="zx-chip zx-chip--owner" data-owner="{{ meta.owner }}" title="作成担当">
+          {% include ".icons/lucide/user-round.svg" %}{{ meta.owner }}
+        </span>
+      {% endif %}
+      {% if meta.status %}
+        <span class="zx-chip zx-chip--status" data-status="{{ meta.status }}" title="作業状況">
+          {% include ".icons/lucide/circle-dot.svg" %}{{ meta.status }}
+        </span>
+      {% endif %}
+    </div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}

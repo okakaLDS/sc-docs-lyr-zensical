@@ -1,0 +1,367 @@
+/* =============================================================================
+   Zensical版 デザイン「データシート」
+   半導体の技術資料（データシート）を下敷きにした、落ち着いた製図調のデザイン。
+     インク（紺）… 本文・見出し
+     コバルト  … リンク・操作（primary）
+     銅        … アクセント（配線の銅。primaryと競合しない差し色）
+   正本（MkDocs版）の stylesheets/extra.css は読み込まない。
+   ============================================================================= */
+
+/* -----------------------------------------------------------------------------
+   トークン
+   ----------------------------------------------------------------------------- */
+:root,
+[data-md-color-scheme="default"] {
+  --zx-ink: #0E1726;
+  --zx-ink-2: #3A4556;
+  --zx-cobalt: #1D4ED8;
+  --zx-copper: #B4622A;
+  --zx-teal: #0F766E;
+  --zx-violet: #6D4AC9;
+  --zx-surface: #F5F7FA;
+  --zx-line: #DFE3EA;
+  --zx-grid: rgba(29, 78, 216, 0.07);
+
+  --md-primary-fg-color: #1D4ED8;
+  --md-primary-fg-color--light: #3B6BF0;
+  --md-primary-fg-color--dark: #1739A6;
+  --md-accent-fg-color: #B4622A;
+  --md-accent-fg-color--transparent: rgba(180, 98, 42, 0.1);
+  --md-typeset-a-color: #1D4ED8;
+  --md-default-fg-color: rgba(14, 23, 38, 0.92);
+  --md-typeset-color: var(--zx-ink);
+}
+
+[data-md-color-scheme="slate"] {
+  --zx-ink: #E6EAF0;
+  --zx-ink-2: #A9B3C2;
+  --zx-cobalt: #7FA4FF;
+  --zx-copper: #E39A5F;
+  --zx-teal: #4FC7B7;
+  --zx-violet: #B4A0FF;
+  --zx-surface: #121925;
+  --zx-line: #253041;
+  --zx-grid: rgba(127, 164, 255, 0.08);
+
+  --md-default-bg-color: #0B1018;
+  --md-default-bg-color--light: rgba(11, 16, 24, 0.7);
+  --md-primary-fg-color: #7FA4FF;
+  --md-primary-fg-color--light: #A2BEFF;
+  --md-primary-fg-color--dark: #5B85F0;
+  --md-accent-fg-color: #E39A5F;
+  --md-accent-fg-color--transparent: rgba(227, 154, 95, 0.12);
+  --md-typeset-a-color: #8DB0FF;
+  --md-code-bg-color: #121925;
+}
+
+/* -----------------------------------------------------------------------------
+   全幅表示（ヘッダー・タブ・本文・フッターをブラウザ幅いっぱいに使う）
+   ----------------------------------------------------------------------------- */
+.md-grid { max-width: none; }
+
+/* -----------------------------------------------------------------------------
+   告知バナー
+   ----------------------------------------------------------------------------- */
+.md-banner {
+  color: var(--zx-ink);
+  background: var(--zx-surface);
+  border-bottom: 1px solid var(--zx-line);
+}
+.md-banner__inner { margin: 0.45rem auto; font-size: 0.65rem; }
+.md-banner a { color: var(--zx-cobalt); font-weight: 600; }
+.zx-announce svg {
+  width: 1.1em; height: 1.1em; vertical-align: -0.2em; margin-right: 0.35em;
+  fill: none; color: var(--zx-copper);
+}
+
+/* -----------------------------------------------------------------------------
+   見出し・本文（データシート調）
+   ----------------------------------------------------------------------------- */
+.md-typeset h1 {
+  margin-bottom: 1.2rem;
+  font-weight: 700; letter-spacing: -0.01em;
+  color: var(--zx-ink);
+}
+.md-typeset h2 {
+  margin-top: 2.2rem;
+  padding-bottom: 0.35rem;
+  font-weight: 700;
+  color: var(--zx-ink);
+  border-bottom: 1px solid var(--zx-line);
+}
+.md-typeset h2::before {
+  content: "";
+  display: inline-block;
+  width: 0.35rem; height: 0.95em;
+  margin-right: 0.5rem;
+  vertical-align: -0.12em;
+  background: var(--zx-copper);
+}
+.md-typeset h3 { font-weight: 700; color: var(--zx-ink); }
+.md-typeset h4 { font-weight: 700; color: var(--zx-ink-2); }
+
+.md-typeset code { font-size: 0.85em; }
+
+/* 引用ブロック（各ページ冒頭の「参照元」など）は注記として控えめに */
+.md-typeset blockquote {
+  color: var(--zx-ink-2);
+  background: var(--zx-surface);
+  border-left: 3px solid var(--zx-line);
+  padding: 0.4rem 0.9rem;
+}
+
+/* -----------------------------------------------------------------------------
+   表: データシートのように行を詰め、縞と細罫で読ませる
+   ----------------------------------------------------------------------------- */
+.md-typeset table:not([class]) {
+  font-size: 0.68rem;
+  border: 1px solid var(--zx-line);
+  border-radius: 0.3rem;
+}
+.md-typeset table:not([class]) th {
+  font-weight: 700;
+  color: var(--zx-ink);
+  background: var(--zx-surface);
+  border-bottom: 2px solid var(--zx-line);
+  white-space: nowrap;
+}
+.md-typeset table:not([class]) td,
+.md-typeset table:not([class]) th {
+  padding: 0.5em 0.9em;
+  border-top: 1px solid var(--zx-line);
+}
+.md-typeset table:not([class]) tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--zx-surface) 55%, transparent);
+}
+.md-typeset table:not([class]) tbody tr:hover {
+  background: var(--md-accent-fg-color--transparent);
+}
+/* 並べ替え可能な列見出し（site.js / tablesort） */
+.md-typeset table[data-zx-sort] th[role="columnheader"]:not([data-sort-method="none"]) { cursor: pointer; }
+
+/* 表紙の押印枠（正本 extra.css から本文が依存する分だけ移植） */
+.seal-table { border-collapse: collapse; }
+.seal-table th, .seal-table td { border: 1px solid #888; padding: 4px 10px; text-align: center; }
+.seal-box { width: 20mm; height: 20mm; margin: 4px auto; border: 1px dashed #aaa; border-radius: 4px; }
+
+/* -----------------------------------------------------------------------------
+   ホーム: ヒーロー（明るい製図面＋ウェハ）
+   ----------------------------------------------------------------------------- */
+.zx-hero {
+  position: relative;
+  overflow: hidden;
+  color: var(--zx-ink);
+  background-color: var(--md-default-bg-color);
+  background-image:
+    linear-gradient(var(--zx-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--zx-grid) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border-bottom: 1px solid var(--zx-line);
+}
+.zx-hero__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 2rem;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 3rem 1.6rem 3.2rem;
+}
+.zx-hero__eyebrow {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.68rem; font-weight: 600;
+  color: var(--zx-ink-2);
+}
+.zx-hero__eyebrow span {
+  padding: 0.1rem 0.5rem;
+  font-family: var(--md-code-font-family);
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em;
+  color: var(--zx-copper);
+  border: 1px solid currentcolor;
+  border-radius: 0.2rem;
+}
+.zx-hero__title {
+  margin: 0;
+  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  font-weight: 700; line-height: 1.25; letter-spacing: -0.01em;
+  color: var(--zx-ink);
+}
+.zx-hero__lead {
+  max-width: 38rem; margin: 1rem 0 1.6rem;
+  font-size: 0.85rem; line-height: 1.9; color: var(--zx-ink-2);
+}
+.zx-hero__lead strong { color: var(--zx-ink); }
+.zx-hero__actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.zx-hero .md-button {
+  display: inline-flex; align-items: center; gap: 0.45em;
+  margin: 0; padding: 0.55em 1.2em;
+  font-size: 0.72rem; font-weight: 600;
+  color: var(--zx-ink);
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--zx-line);
+  border-radius: 0.3rem;
+  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
+}
+.zx-hero .md-button svg { width: 1.1em; height: 1.1em; fill: none; }
+.zx-hero .md-button:hover { color: var(--zx-cobalt); border-color: var(--zx-cobalt); }
+.zx-hero .md-button--primary {
+  color: #fff; background: var(--zx-cobalt); border-color: var(--zx-cobalt);
+}
+[data-md-color-scheme="slate"] .zx-hero .md-button--primary { color: #0B1018; }
+.zx-hero .md-button--primary:hover {
+  color: #fff; background: var(--md-primary-fg-color--dark); border-color: var(--md-primary-fg-color--dark);
+}
+
+/* ウェハ: 円形にマスクしたダイの格子。一部のダイを銅色で強調 */
+.zx-wafer {
+  position: relative;
+  width: 247px; /* 13px（ダイ11px＋スクライブ2px）× 19 */
+  aspect-ratio: 1;
+}
+.zx-wafer__disc {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background:
+    linear-gradient(var(--zx-copper), var(--zx-copper)) calc(13px * 10) calc(13px * 5) / 11px 11px no-repeat,
+    linear-gradient(var(--zx-copper), var(--zx-copper)) calc(13px * 11) calc(13px * 5) / 11px 11px no-repeat,
+    linear-gradient(var(--zx-copper), var(--zx-copper)) calc(13px * 10) calc(13px * 6) / 11px 11px no-repeat,
+    linear-gradient(var(--zx-cobalt), var(--zx-cobalt)) calc(13px * 4) calc(13px * 11) / 11px 11px no-repeat,
+    linear-gradient(var(--zx-cobalt), var(--zx-cobalt)) calc(13px * 7) calc(13px * 14) / 11px 11px no-repeat,
+    linear-gradient(var(--zx-copper), var(--zx-copper)) calc(13px * 13) calc(13px * 12) / 11px 11px no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 11px, var(--md-default-bg-color) 11px 13px),
+    repeating-linear-gradient(90deg, transparent 0 11px, var(--md-default-bg-color) 11px 13px),
+    linear-gradient(135deg, color-mix(in srgb, var(--zx-cobalt) 22%, var(--zx-surface)), color-mix(in srgb, var(--zx-copper) 18%, var(--zx-surface)));
+  box-shadow:
+    0 0 0 6px var(--md-default-bg-color),
+    0 0 0 7px var(--zx-line),
+    0 1.2rem 2.4rem rgba(14, 23, 38, 0.12);
+}
+.zx-wafer__notch {
+  position: absolute; left: 50%; bottom: -3px;
+  width: 0.9rem; height: 0.55rem;
+  transform: translateX(-50%);
+  background: var(--md-default-bg-color);
+  border-radius: 0.9rem 0.9rem 0 0;
+}
+@media screen and (max-width: 44.9375em) {
+  .zx-hero__inner { grid-template-columns: 1fr; padding: 2rem 0.8rem 2.2rem; }
+  .zx-wafer { display: none; }
+}
+
+/* -----------------------------------------------------------------------------
+   ホーム: 章カード（ナビから自動生成）
+   ----------------------------------------------------------------------------- */
+.zx-chapters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+  gap: 0.8rem;
+  /* .md-container は縦flexで md-grid は左右margin:auto のため、幅を明示しないと内容幅に広がる */
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1.6rem 1.6rem 0;
+}
+.zx-card {
+  position: relative;
+  display: flex; flex-direction: column; gap: 0.45rem;
+  padding: 0.9rem 1rem 1rem;
+  color: var(--zx-ink);
+  background: var(--md-default-bg-color);
+  border: 1px solid var(--zx-line);
+  border-left: 3px solid var(--zx-line);
+  border-radius: 0.3rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.zx-card:hover {
+  color: var(--zx-ink);
+  border-color: var(--zx-cobalt);
+  border-left-color: var(--zx-copper);
+  box-shadow: 0 0.4rem 1.2rem rgba(14, 23, 38, 0.08);
+}
+.zx-card__no {
+  font-family: var(--md-code-font-family);
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--zx-copper);
+}
+.zx-card__title { font-size: 0.88rem; font-weight: 700; }
+.zx-card__docs { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.zx-card__docs span {
+  padding: 0.05rem 0.4rem;
+  font-size: 0.6rem; line-height: 1.6;
+  color: var(--zx-ink-2);
+  background: var(--zx-surface);
+  border: 1px solid var(--zx-line);
+  border-radius: 0.2rem;
+}
+.zx-card__go {
+  position: absolute; right: 0.9rem; top: 0.85rem;
+  color: var(--zx-ink-2); opacity: 0.5;
+  transition: transform 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+}
+.zx-card__go svg { width: 1rem; height: 1rem; fill: none; }
+.zx-card:hover .zx-card__go { transform: translateX(3px); color: var(--zx-cobalt); opacity: 1; }
+
+/* -----------------------------------------------------------------------------
+   各ページ: メタ情報バー（front matter の doc_no / owner / status）
+   ----------------------------------------------------------------------------- */
+.zx-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0 0 0.6rem; }
+.zx-chip {
+  --zx-chip: var(--zx-ink-2);
+  display: inline-flex; align-items: center; gap: 0.3em;
+  padding: 0.05rem 0.55rem 0.05rem 0.4rem;
+  font-size: 0.62rem; font-weight: 600; line-height: 1.8;
+  color: var(--zx-chip);
+  background: color-mix(in srgb, var(--zx-chip) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--zx-chip) 35%, transparent);
+  border-radius: 0.2rem;
+}
+.zx-chip svg { width: 1.05em; height: 1.05em; fill: none; }
+.zx-chip--docno { font-family: var(--md-code-font-family); }
+.zx-chip--owner[data-owner="KCCS"] { --zx-chip: var(--zx-cobalt); }
+.zx-chip--owner[data-owner="SC様"] { --zx-chip: var(--zx-copper); }
+.zx-chip--owner[data-owner="Rikkei"] { --zx-chip: var(--zx-teal); }
+.zx-chip--status[data-status="作業中"] { --zx-chip: var(--zx-ink-2); }
+.zx-chip--status[data-status="レビュー中"] { --zx-chip: var(--zx-violet); }
+.zx-chip--status[data-status="確定"] { --zx-chip: var(--zx-teal); }
+
+/* -----------------------------------------------------------------------------
+   サイドバーのページステータス（zensical.toml の [project.extra.status]）
+   作業中は全ページ共通なので目立たせない。レビュー中・確定になったら色で浮く
+   ----------------------------------------------------------------------------- */
+.md-status--作業中::after {
+  mask-image: url("icons/pencil-line.svg"); -webkit-mask-image: url("icons/pencil-line.svg");
+  opacity: 0.35;
+}
+.md-status--レビュー中::after {
+  mask-image: url("icons/eye.svg"); -webkit-mask-image: url("icons/eye.svg");
+  background-color: var(--zx-violet);
+}
+.md-status--確定::after {
+  mask-image: url("icons/circle-check-big.svg"); -webkit-mask-image: url("icons/circle-check-big.svg");
+  background-color: var(--zx-teal);
+}
+
+/* -----------------------------------------------------------------------------
+   ナビ: [使い方]／[Template]／[Sample] の種別バッジ（site.js が属性を付与）
+   ----------------------------------------------------------------------------- */
+.zx-kind::before {
+  content: attr(data-zx-kind);
+  display: inline-block;
+  min-width: 3.6em;
+  margin-right: 0.45em; padding: 0 0.3em;
+  font-family: var(--md-code-font-family);
+  font-size: 0.52rem; font-weight: 700; line-height: 1.7; text-align: center;
+  vertical-align: 0.1em;
+  color: var(--zx-kind);
+  border: 1px solid color-mix(in srgb, var(--zx-kind) 45%, transparent);
+  border-radius: 0.2rem;
+}
+.md-nav__link[data-zx-kind="使い方"] { --zx-kind: var(--zx-cobalt); }
+.md-nav__link[data-zx-kind="Template"] { --zx-kind: var(--zx-ink-2); }
+.md-nav__link[data-zx-kind="Sample"] { --zx-kind: var(--zx-copper); }
+
+/* 印刷（表紙の承認用PDFなど）: 告知・ヒーロー・メタ情報は出さない */
+@media print {
+  .md-banner, .zx-hero, .zx-chapters, .zx-meta { display: none !important; }
+}
